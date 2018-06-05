@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="table-responsive" id="review">
+        <h3>Review</h3>
+        <table id="mainTable" class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+                <tr>
+                <th>191__a</th>
+                <th>191__b</th>
+                <th>191__c</th>
+                <th>245__a</th>
+                <th>269__a</th>
+                <th>029__b</th>
+                <th>300__a</th>
+                <th>999__a</th>
+                <th>931__a</th>
+                <th>980__a</th>
+                <th>989__a</th>
+                <th>990__a</th>
+                <th>FFT__a</th>
+                <th>FFT__d</th>
+                <th>FFT__n</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for result in context['new'] %}
+            <tr class="review" id="{{ result['191__a']|replace('/','')|replace('.','') }}">
+                <td class="text-truncate sym">{{ result['191__a'] }}</td>
+                <td class="text-truncate">{{ result['191__b'] }}</td>
+                <td class="text-truncate insertAfter">{{ result['191__c'] }}</td>
+                <td class="text-truncate">{{ result['245__a'] }}</td>
+                <td class="text-truncate">{{ result['269__a'] }}</td>
+                <td class="text-truncate">{{ result['029__b'] }}</td>
+                <td class="text-truncate">{{ result['300__a'] }}</td>
+                <td class="text-truncate">{{ result['999__a'] }}</td>
+                <td class="text-truncate 931a">{{ result['931__a'] }}</td>
+                <td class="text-truncate">{{ result['980__a'] }}</td>
+                <td class="text-truncate">{{ result['989__a'] }}</td>
+                <td class="text-truncate 990a">{{ result['990__a'] }}</td>
+                <td class="text-truncate ffta" style="max-width: 150px;">{{ result['FFT__a'] }}</td>
+                <td class="text-truncate fftd">{{ result['FFT__d'] }}</td>
+                <td class="text-truncate fftn">{{ result['FFT__n'] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="table-responsive" id="new">
+        <h3>New</h3>
+        <a href="#" id="downloader">Download</a>
+        <table id="newTable" class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+                <tr>
+                <th>191__a</th>
+                <th>191__b</th>
+                <th>191__c</th>
+                <th>245__a</th>
+                <th>269__a</th>
+                <th>029__b</th>
+                <th>300__a</th>
+                <th>999__a</th>
+                <th>931__a</th>
+                <th>980__a</th>
+                <th>989__a</th>
+                <th>990__a</th>
+                <th>FFT__a</th>
+                <th>FFT__d</th>
+                <th>FFT__n</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="table-responsive" id="append">
+        <h3>Append</h3>
+        <a href="#" id="appendDownload">Download</a>
+        <table id="appendTable" class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+                <tr>
+                <th>191__a</th>
+                <th>191__b</th>
+                <th>191__c</th>
+                <th>035__a</th>
+                <th>245__a</th>
+                <th>269__a</th>
+                <th>029__b</th>
+                <th>300__a</th>
+                <th>999__a</th>
+                <th>931__a</th>
+                <th>980__a</th>
+                <th>989__a</th>
+                <th>990__a</th>
+                <th>FFT__a</th>
+                <th>FFT__d</th>
+                <th>FFT__n</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="table-responsive" id="error">
+        <h3>Errors</h3>
+        <table id="errorTable" class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+                <tr>
+                <th>191__a</th>
+                <th>191__b</th>
+                <th>191__c</th>
+                <th>245__a</th>
+                <th>269__a</th>
+                <th>029__b</th>
+                <th>300__a</th>
+                <th>999__a</th>
+                <th>931__a</th>
+                <th>980__a</th>
+                <th>989__a</th>
+                <th>990__a</th>
+                <th>FFT__a</th>
+                <th>FFT__d</th>
+                <th>FFT__n</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="foo"></div>
+
+<script type="text/javascript">
+$('#mainTable').editableTableWidget({editor: $('<textarea>')}).find('td:first').focus();
+$('#newTable').editableTableWidget({editor: $('<textarea>')}).find('td:first').focus();
+$('#appendTable').editableTableWidget({editor: $('<textarea>')}).find('td:first').focus();
+$('#downloader').click(function(e) {
+    $('#foo').html( "{{ context['review'] }}" );
+});
+//$('#validator').click(function(e) {
+
+//});
+
+$(document).ready(function(){
+    // hide stuff at the outset
+    $('#new').hide();
+    $('#append').hide();
+    $('#error').hide();
+    var this_review = "{{ context['review'] }}";
+    var this_path = "{{ context['file_path'] }}";
+    var this_new = [];
+    var this_append = [];
+    var reviewCount = $('#mainTable tr.review').length;
+    console.log(reviewCount);
+    $('.navbar-nav').append('<li class="nav-item"><span class="nav-link">></span></li><li class="nav-item" id="navReview"><span class="nav-link active">Review</span></li>');
+    $('#navSubmit .nav-link').removeClass('active');
+    //$('#navReview .nav-link').removeClass('disaled');
+    $('#navReview .nav-link').addClass('active');
+    $('td.fftn').each( function(idx,val) {
+        var this_entry = val.innerHTML;
+        var lookup = location.href.replace('/#','') + 's3' + '?path=' + this_path.replace(' ','%20') + '&entry=' + this_entry.replace(' ','%20');
+        var this_fft = $('td.ffta')[idx];
+        var got_url = $.getJSON(lookup, function(data){
+            if(data.length > 1) {
+                $('td.ffta')[idx].innerText = data;
+            } else {
+                $(this_fft).text = 'ERROR';
+                $(this_fft).parent().addClass('bg-danger');
+                $(this_fft).parent().detach();
+            }
+        });
+    });
+    $('table#mainTable td.sym').each( function(idx,val) {
+        var this_symbol = val.innerHTML;
+        var basic_symbol = this_symbol.replace(/[\/\.]/g, '');
+        var lookup = location.href.replace('/#','') + 'resolve' + '?symbol=' + this_symbol;
+        var this_tr = $('tr#' + basic_symbol);
+        var got_symbol = $.getJSON(lookup, function(data) {
+            if(data.length > 1) {
+                if($('#append').is(':hidden')) {
+                    $('#append').show();
+                }
+                $('table#appendTable tbody').append(this_tr);
+                $('<td class="text-truncate 035a">' + data + '</td>').insertAfter($('tr#' + basic_symbol + ' td.insertAfter'));
+            } else if ($(this_tr).hasClass('bg-danger')) {
+                if($('#error').is(':hidden')) {
+                    $('#error').show();
+                }
+                $(this_tr).appendTo($('table#errorTable tbody'));
+            } else {
+                if($('#new').is(':hidden')) {
+                    $('#new').show();
+                }
+                $('table#newTable tbody').append(this_tr);
+            }
+            reviewCount -= 1;
+            if (reviewCount == 0) {
+                $('#navReview .nav-link').removeClass('active');
+                $('.navbar-nav').append('<li class="nav-item"><span class="nav-link">></span></li><li class="nav-item" id="navDone"><span class="nav-link">Done</span></li>');
+                $('.navbar-nav').append('<li class="nav-item"><a href="/" class="nav-link active">Submit Another</a></span></li>');
+                $('#review').remove();
+            }
+        });
+    });
+
+    // source: https://gist.github.com/adilapapaya/9787842
+    function exportTableToCSV($table, filename) {
+        var $headers = $table.find('tr:has(th)')
+            ,$rows = $table.find('tr:has(td)')
+            // Temporary delimiter characters unlikely to be typed by keyboard
+            // This is to avoid accidentally splitting the actual contents
+            ,tmpColDelim = String.fromCharCode(11) // vertical tab character
+            ,tmpRowDelim = String.fromCharCode(0) // null character
+            // actual delimiter characters for CSV format
+            ,colDelim = '","'
+            ,rowDelim = '"\r\n"';
+            // Grab text from table into CSV formatted string
+        var csv = '"';
+        csv += formatRows($headers.map(grabRow));
+        csv += rowDelim;
+        csv += formatRows($rows.map(grabRow)) + '"';
+        console.log(csv);
+        // Data URI
+        var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+               
+        $(this)
+            .attr({
+                'download': filename
+                ,'href': csvData
+                //,'target' : '_blank' //if you want it to open in a new window
+            });
+        //------------------------------------------------------------
+        // Helper Functions 
+        //------------------------------------------------------------
+        // Format the output so it has the appropriate delimiters
+        function formatRows(rows){
+            return rows.get().join(tmpRowDelim)
+                .split(tmpRowDelim).join(rowDelim)
+                .split(tmpColDelim).join(colDelim);
+        }
+        // Grab and format a row from the table
+        function grabRow(i,row){
+            var $row = $(row);
+            //for some reason $cols = $row.find('td') || $row.find('th') won't work...
+            var $cols = $row.find('td'); 
+            if(!$cols.length) $cols = $row.find('th');  
+            return $cols.map(grabCol)
+                .get().join(tmpColDelim);
+        }
+        // Grab and format a column from the table 
+        function grabCol(j,col){
+            var $col = $(col),
+                $text = $col.text();
+            return $text.replace('"', '""'); // escape double quotes
+        }
+    }
+            
+    // This must be a hyperlink
+    $("#appendDownload").click(function (event) {
+        // var outputFile = 'export'
+        var outputFile = window.prompt("What do you want to name your output file (Note: This won't have any effect on Safari)") || 'export';
+        outputFile = outputFile.replace('.csv','') + '.csv'
+                 
+        // CSV
+        exportTableToCSV.apply(this, [$('#append>table'), outputFile]);
+                
+        // IF CSV, don't do event.preventDefault() or return false
+        // We actually need this to be a typical hyperlink
+    });
+});
+
+</script>
+{% endblock %}

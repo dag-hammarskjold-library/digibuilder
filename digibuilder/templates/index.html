@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <form id="filenameList" action="/" method="POST" enctype=multipart/form-data>
+            <div class="form-group">
+                <label for="filePath">Include the folder path for the files.</label>
+                <input id="filePath" name="filePath" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="191b">191__b</label>
+                <input id="191b" name="191b" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="191c">191__c</label>
+                <input id="191c" name="191c" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="file">Upload a CSV</label>
+                <input type="file" name="file" id="file">
+            </div>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
